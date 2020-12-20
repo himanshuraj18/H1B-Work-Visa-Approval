@@ -136,6 +136,34 @@ def apply_RF(X_train, Y_train, X_test, Y_test):
     print(confusion_matrix(Y_test, Y_pred))
 
 """
+    Applying Decision Tree with cv = 4.
+    Doing Hyperparameter Tuning using Grid Search Technique.
+    Output -
+        1. Will generate a table of all train and validation score corresponding to each set of hyperparameters.
+        2. Give Test Accuracy using the best model.
+        3. Generate Confusion Matrix.
+        4. Generate Relevant Graphs. 
+"""
+
+def apply_Decision_Tree(X, Y):
+    params = {'random_state' : [0]}
+    params['max_depth'] = [i for i in range(1,30)]
+    clf = GridSearchCV(DecisionTreeClassifier(), param_grid = params, return_train_score = True, verbose = 5, n_jobs=-1, cv=4)
+    X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=0, stratify = Y)
+    clf.fit(X_train,Y_train)
+    results = pd.DataFrame(clf.cv_results_)
+    results = results[['param_max_depth','mean_train_score', 'mean_test_score']]
+    x = [i for i in range(1,30)]
+    y1 = list(results['mean_train_score'])
+    y2 = list(results['mean_test_score'])
+    print(results.to_string())
+    graph_plot(x, y1, y2, 'Max Depth', 'Accuracy vs Max Depth', 'img/max_depth.png')    
+    ypred = clf.predict(X_test)
+    print ("Accuracy on Testing Data is ",accuracy_score(ypred, Y_test))
+    print (confusion_matrix(Y_test, ypred))
+    return x, y1, y2
+
+"""
     Applying Neural Network with cv = 4.
     Doing Hyperparameter Tuning using Grid Search Technique.
     Output -
