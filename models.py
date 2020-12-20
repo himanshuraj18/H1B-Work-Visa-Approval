@@ -177,7 +177,7 @@ def apply_Decision_Tree(X, Y):
 """
 
 def apply_Neural_Net(X, Y):
-    params = {'random_state' : [0], 'hidden_layer_sizes':[(264, 64, 32)], 'max_iter':[500], 'alpha':[0.001]}
+    params = {'random_state' : [0], 'hidden_layer_sizes':[(264, 64, 32)], 'max_iter':[500]}
     params['activation'] = ['tanh','relu','logistic','identity']
     clf = GridSearchCV(MLPClassifier(), param_grid = params, return_train_score = True, n_jobs = -1, cv = 4)
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=0, stratify = Y)
