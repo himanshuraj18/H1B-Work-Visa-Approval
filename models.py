@@ -8,7 +8,10 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
-
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.neural_network import MLPClassifier
+from sklearn.manifold import TSNE
+import seaborn as sns
 
 """
     Function to seperate X and Y from a dataset.
@@ -191,7 +194,12 @@ def apply_Neural_Net(X, Y):
     print (confusion_matrix(Y_test, ypred))
     return x, y1, y2
 
-
+def tsne(x_train, y_train): # Plot the data
+    t = TSNE(random_state=0)
+    x_plot = t.fit_transform(x_train) # Transform after fitting
+    palette = sns.color_palette("bright", 2) # Transform
+    sns.scatterplot(x_plot[:,0], x_plot[:,1], hue=y_train, legend='full', palette=palette)
+    plt.show()
 
 df = pd.read_csv('mkc.csv')                         #importing data
 df = df.sample(frac=1).reset_index(drop=True)       #shuffling
