@@ -66,7 +66,7 @@ def apply_KNN(X_train, Y_train, X_test, Y_test):
         'n_neighbors' : [i for i in range(3,100,2)],
         'n_jobs' : [-1]
     }
-    clf = GridSearchCV(KNeighborsClassifier(), param_grid = params, return_train_score = True, verbose = 5, n_jobs=-1, cv=4)
+    clf = GridSearchCV(KNeighborsClassifier(), param_grid = params, return_train_score = True, n_jobs=-1, cv=4)
     clf.fit(X_train, Y_train)
     results = pd.DataFrame(clf.cv_results_)
     results = results[['param_n_neighbors','mean_train_score', 'mean_test_score']]
@@ -88,7 +88,7 @@ def apply_KNN(X_train, Y_train, X_test, Y_test):
 """
 def apply_Logistic_Regression(X_train, Y_train, X_test, Y_test):
     params = {'max_iter' : [i for i in range(1,200)]}
-    clf = GridSearchCV(LogisticRegression(), param_grid = params, return_train_score = True, verbose = 5, n_jobs=-1, cv=4)
+    clf = GridSearchCV(LogisticRegression(), param_grid = params, return_train_score = True, n_jobs=-1, cv=4)
     clf.fit(X_train,Y_train)
     results = pd.DataFrame(clf.cv_results_)
     results = results[['param_max_iter','mean_train_score', 'mean_test_score']]
@@ -128,7 +128,7 @@ def apply_RF(X_train, Y_train, X_test, Y_test):
               'random_state' : [0],
               'n_jobs' : [-1]
              }
-    clf = GridSearchCV(RandomForestClassifier(), param_grid = params, return_train_score = True, verbose = 100, n_jobs=-1, cv=4)
+    clf = GridSearchCV(RandomForestClassifier(), param_grid = params, return_train_score = True, n_jobs=-1, cv=4)
     clf.fit(X_train,Y_train)
     results = pd.DataFrame(clf.cv_results_)
     results = results[['mean_train_score', 'mean_test_score']]
@@ -151,7 +151,7 @@ def apply_RF(X_train, Y_train, X_test, Y_test):
 def apply_Decision_Tree(X, Y):
     params = {'random_state' : [0]}
     params['max_depth'] = [i for i in range(1,30)]
-    clf = GridSearchCV(DecisionTreeClassifier(), param_grid = params, return_train_score = True, verbose = 5, n_jobs=-1, cv=4)
+    clf = GridSearchCV(DecisionTreeClassifier(), param_grid = params, return_train_score = True, n_jobs=-1, cv=4)
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=0, stratify = Y)
     clf.fit(X_train,Y_train)
     results = pd.DataFrame(clf.cv_results_)
@@ -179,7 +179,7 @@ def apply_Decision_Tree(X, Y):
 def apply_Neural_Net(X, Y):
     params = {'random_state' : [0], 'hidden_layer_sizes':[(264, 64, 32)], 'max_iter':[500], 'alpha':[0.001]}
     params['activation'] = ['tanh','relu','logistic','identity']
-    clf = GridSearchCV(MLPClassifier(), param_grid = params, return_train_score = True, verbose = 5, n_jobs = -1, cv = 4)
+    clf = GridSearchCV(MLPClassifier(), param_grid = params, return_train_score = True, n_jobs = -1, cv = 4)
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=0, stratify = Y)
     clf.fit(X_train,Y_train)
     results = pd.DataFrame(clf.cv_results_)
@@ -201,7 +201,7 @@ def tsne(x_train, y_train): # Plot the data
     sns.scatterplot(x_plot[:,0], x_plot[:,1], hue=y_train, legend='full', palette=palette)
     plt.show()
 
-df = pd.read_csv('mkc.csv')                         #importing data
+df = pd.read_csv('Final_Dataset.csv')                         #importing data
 df = df.sample(frac=1).reset_index(drop=True)       #shuffling
 
 X,Y = sep_X_Y(df)
@@ -210,10 +210,20 @@ X,Y = sep_X_Y(df)
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=0, stratify = Y)
 
 #applying models
+print("Results from Logistic Regression - ")
 apply_Logistic_Regression(X_train, Y_train, X_test, Y_test)
 
+print("Results from Gaussian Naive Bayes - ")
 apply_Naive_Bayes(X_train, Y_train, X_test, Y_test)
 
+print("Results from KNN - ")
+apply_KNN(X_train, Y_train, X_test, Y_test)
+
+print("Results from Decision Tree - ")
+apply_Decision_Tree(X, Y)
+
+print("Results from Random Forest - ")
 apply_RF(X_train, Y_train, X_test, Y_test)
 
-apply_KNN(X_train, Y_train, X_test, Y_test)
+print("Results from Neural Network - ")
+apply_Neural_Net(X, Y)
