@@ -17,3 +17,8 @@ Using the analysis, one can potentially reduce a lot of risk involved in the app
 Data set description : 
 Using official statistics we were able to find the datasets for H1B approval , and we selected the dataset for the year 2019 .
 There were over 260 features recorded in that, and the target variable was CASE_STATUS. Some of the major attributes included Job title , employer name , wage , employment duration, renewal  and so on…
+
+
+## Final Results
+
+A complete report of all findings and model performances can be viewed [here](Final Report.pdf)
