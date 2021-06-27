@@ -21,4 +21,4 @@ There were over 260 features recorded in that, and the target variable was CASE_
 
 ## Final Results
 
-A complete report of all findings and model performances can be viewed [here](Final Report.pdf)
+A complete report of all findings and model performances can be viewed [here](Final%20Report.pdf)
