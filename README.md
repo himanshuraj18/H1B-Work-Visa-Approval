@@ -22,3 +22,12 @@ There were over 260 features recorded in that, and the target variable was CASE_
 ## Final Results
 
 A complete report of all findings and model performances can be viewed [here](Final%20Report.pdf)
+
+
+Team Members :
+
+[Himanshu Raj](https://github.com/himanshuraj18)
+
+[Vishwesh Kumar](https://github.com/vishwesh-D-kumar)
+
+[Naman Tyagi](https://github.com/Naman18055)
